@@ -14,7 +14,7 @@ app.post('/home', function(req, res){
 });
 
 app.post('/', function(req, res){
-  // console.log(req.body);
+  console.log(req.body);
 
     var acre_arr = new Array("N/A - GQ/not a one-family house or mobile home",
                              "House on less than one acre",
@@ -33,9 +33,11 @@ app.post('/', function(req, res){
                              "2005", "2006", "2007", "2008", "2009", "2010",
                              "2011", "2012", "2013", "2014", "2015", "2016");
 
+    var rwat_arr = new Array("N/A", "Yes", "No", "", "", "", "", "", "", "Not Applicable")
+
 
     var spawn = require('child_process').spawn;
-    var process = spawn('python3', ["./models_function.py",
+    var process = spawn('python3', ["./model_functions.py",
       req.body.age,
       req.body.mar,
       req.body.nfm,
@@ -51,17 +53,12 @@ app.post('/', function(req, res){
     ]);
 
     process.stdout.on('data', function(data) {
-      // console.log(data.toString());
+      console.log(data.toString());
       var values = data.toString();
       var r = values.split(',');
-      if ( r[3] == "True"){
-        r[3] = "Yes"
-      }
-      else{
-        r[3] = "No"
-      }
       res.render('response.ejs', {acres:acre_arr[r[0].trim()], beds:r[1], mort:r[2],
-                                  wat:r[3], ten:ten_arr[r[4].trim()], year:year_arr[r[5].trim()]});
+                                  wat:rwat_arr[r[3].trim()], ten:ten_arr[r[4].trim()],
+                                  year:year_arr[r[5].trim()]});
     });
 
 });

@@ -1,0 +1,242 @@
+<html>
+
+<head>
+  <title> Home Profile Prediction System</title>
+</head>
+<script type="text/javascript">
+  function AllowNumbersOnly(e) {
+    var code = (e.which) ? e.which : e.keyCode;
+    if (code > 31 && (code < 48 || code > 57)) {
+      e.preventDefault();
+    }
+  }
+
+  function validateForm() {
+      var age = document.forms["myForm"]["age"].value;
+      var wage = document.forms["myForm"]["wage"].value;
+      var nfm = document.forms["myForm"]["nfm"].value;
+      if (age < 18 || age > 99) {
+          alert("Age values must be between 18 and 99..");
+          return false;
+      }
+
+      if (wage < 0 || wage > 999999) {
+          alert("Wage values must be between 0 and 999999..");
+          return false;
+      }
+
+      if (nfm < 0 || nfm > 20) {
+          alert("Number of family members must be between 0 and 20..");
+          return false;
+      }
+    }
+</script>
+
+<style>
+  label {
+    display: inline-block;
+    width: 190px;
+    text-align: right;
+    font-weight: bold;
+  }
+
+  button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 12px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+</style>
+
+<body>
+  <form name="myForm" action="/" method="POST" onsubmit="return validateForm()">
+    <h1 align="center">Home Profile Prediction System</h1>
+    <h3 align="center"> Enter the below details to see the model predicted Home Profile in the State of Illinois</h3>
+    <table align="center">
+      <tr>
+        <td>
+          <div>
+            <label for="age">Age: </label>
+            <input type="text" name="age" id="age" onkeypress="return AllowNumbersOnly(event)" placeholder="Valid values: 18 to 99" />
+          </div>
+          <br/>
+
+          <div>
+            <label for="sex">Sex: </label>
+            <!-- <input type="text" name="sex" id="sex" /> -->
+            <select name="sex">
+              <option value="1">Male</option>
+              <option value="2">Female</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="mar">Martial Status: </label>
+            <select name="mar">
+                <option value="0">N/A (age less than 15 years)</option>
+                <option value="1">Now married, spouse present</option>
+                <option value="2">Now married, spouse absent</option>
+                <option value="3">Widowed</option>
+                <option value="4">Divorced</option>
+                <option value="5">Separated</option>
+                <option value="6">Never married</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="wage">Wage: </label>
+            <input type="text" name="wage" id="wage" onkeypress="return AllowNumbersOnly(event)"
+              placeholder="00000 to 999999"/>
+          </div>
+          <br/>
+
+          <div>
+            <label for="eth">Race/Ethnicity: </label>
+            <select name="eth">
+              <option value="1">White</option>
+              <option value="2">Black or African American</option>
+              <option value="3">American Indian</option>
+              <option value="4">Alaska Native</option>
+              <option value="5">America/Alaskan tribes</option>
+              <option value="6">Asian</option>
+              <option value="7">Hawaiian/Pacific Islander</option>
+              <option value="8">Other Race</option>
+              <option value="9">Two or more Race</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="ctz">Citizenship: </label>
+            <select name="ctz">
+              <option value="1">Born in US</option>
+              <option value="2">Puerto Rico/Guam/Virgin Islands</option>
+              <option value="3">American Indian</option>
+              <option value="4">Born Abroad-American Parents</option>
+              <option value="5">Citizen by naturalization</option>
+              <option value="6">Not a US Citizen</option>
+            </select>
+          </div>
+          <br/>
+
+        </td>
+
+        <td style="width:50px;">&#160;</td>
+
+        <td>
+          <div>
+            <label for="edu">Education: </label>
+            <select name="edu">
+              <option value="0">N/A</option>
+              <option value="1">No schooling</option>
+              <option value="2">Nursery/Pre-school</option>
+              <option value="3">Kindergarten</option>
+              <option value="4">Grade 1</option>
+              <option value="5">Grade 2</option>
+              <option value="6">Grade 3</option>
+              <option value="7">Grade 4</option>
+              <option value="8">Grade 5</option>
+              <option value="9">Grade 6</option>
+              <option value="10">Grade 7</option>
+              <option value="11">Grade 8</option>
+              <option value="12">Grade 9</option>
+              <option value="13">Grade 10</option>
+              <option value="14">Grade 11</option>
+              <option value="15">Grade 12-No Diploma</option>
+              <option value="16">High School Diploma  </option>
+              <option value="17">GED</option>
+              <option value="18">Some College(less than 1 year)</option>
+              <option value="19">1 or more years-no degree</option>
+              <option value="20">Associate's degree</option>
+              <option value="21">Bachelor's degree</option>
+              <option value="22">Master's degree</option>
+              <option value="23">Professional degree</option>
+              <option value="24">Doctorate degree</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="tfi">Family has any Income: </label>
+            <select name="tfi">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="dis">Disability: </label>
+            <select name="dis">
+              <option value="2">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="mot">Mode of Travel: </label>
+            <select name="mot">
+              <option value="0">N/A</option>
+              <option value="1">Car/Truck/Van</option>
+              <option value="2">Bus</option>
+              <option value="3">Street/Trolly Car</option>
+              <option value="4">Subway</option>
+              <option value="5">Rail</option>
+              <option value="6">Ferry</option>
+              <option value="7">Taxi</option>
+              <option value="8">Motorcycle</option>
+              <option value="9">Bicycle</option>
+              <option value="10">Walk</option>
+              <option value="11">Work at Home</option>
+              <option value="12">Other</option>
+            </select>
+          </div>
+          <br/>
+
+          <div>
+            <label for="nfm">No. of Family Members: </label>
+            <input type="text" name="nfm" id="nfm" onkeypress="return AllowNumbersOnly(event)"
+              placeholder="0 to 20"/>
+          </div>
+          <br/>
+
+          <div>
+            <label for="nov">No. of Vehicles: </label>
+            <select name="nov">
+              <option value="0">N/A</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6 or More</option>
+          </div>
+          <br/>
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <div>
+          <td>
+            <!-- <button type="button">Get Results..</button> -->
+            <input type="submit">
+          </td>
+        </div>
+      </tr>
+
+    </table>
+
+  </form>
+</body>
+
+</html>
