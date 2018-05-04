@@ -10,6 +10,10 @@ app.get('/', function(req, res){
    res.render('index.ejs')
 });
 
+app.post('/home', function(req, res){
+   res.render('index.ejs')
+});
+
 app.post('/', function(req, res){
   console.log(req.body);
 
@@ -48,7 +52,7 @@ app.post('/', function(req, res){
     ]);
 
     process.stdout.on('data', function(data) {
-      console.log(data.toString());
+      // console.log(data.toString());
       var values = data.toString();
       var r = values.split(',');
       if ( r[3] == "True"){
@@ -57,7 +61,6 @@ app.post('/', function(req, res){
       else{
         r[3] = "No"
       }
-      console.log(r);
       res.render('response.ejs', {acres:acre_arr[r[0].trim()], beds:r[1], mort:r[2],
                                   wat:r[3], ten:ten_arr[r[4].trim()], year:year_arr[r[5].trim()]});
 
