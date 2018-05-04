@@ -6,7 +6,6 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(bp());
 app.get('/', function(req, res){
-   // res.sendFile('index.html', {root: path.join(__dirname, './html')})
    res.render('index.ejs')
 });
 
@@ -15,7 +14,7 @@ app.post('/home', function(req, res){
 });
 
 app.post('/', function(req, res){
-  console.log(req.body);
+  // console.log(req.body);
 
     var acre_arr = new Array("N/A - GQ/not a one-family house or mobile home",
                              "House on less than one acre",
@@ -63,14 +62,6 @@ app.post('/', function(req, res){
       }
       res.render('response.ejs', {acres:acre_arr[r[0].trim()], beds:r[1], mort:r[2],
                                   wat:r[3], ten:ten_arr[r[4].trim()], year:year_arr[r[5].trim()]});
-
-      // res.writeHead(200, {
-      //   'Content-Type': 'text/plain'
-      // });
-      // res.write(data.toString());
-      // res.end();
-      // res.send(data.toString());
-      // res.end(JSON.stringify(req.body));
     });
 
 });
