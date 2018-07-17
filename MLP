@@ -1,0 +1,98 @@
+import numpy as np
+import pandas as pd
+import sklearn.model_selection as skms
+import sklearn.svm as sksvm
+import sklearn.ensemble as ske
+import sklearn.tree as skt
+import matplotlib.pyplot as plt
+
+#Read the dataset to a Pandas dataframe
+data = pd.read_csv("mlProject.csv")
+data.head()
+
+#Print the corelations of the features and label
+for col in data.columns:
+    try:
+        print(col, data['Decision'].corr(data[col]))
+    except (TypeError):
+        print(col, "Type Error")
+        
+        
+# Split the data into training/testing.. 
+train, test    = skms.train_test_split(data, test_size=0.2, random_state=123)
+num_features   = len(train.columns)-1
+
+# Use "Decision" as the label
+train_features = train.drop("Decision", axis=1).values
+train_labels   = train["Decision"].values.astype(int)
+
+test_features  = test.drop("Decision", axis=1).values
+test_labels    = test["Decision"].values.astype(int)
+
+
+#function to calculate the accuracy of the models
+def accuracy(prediction: np.ndarray, answer: np.ndarray) -> float:
+    return np.mean(prediction == answer)
+    
+
+# Model: linear SVM.
+svm = sksvm.LinearSVC(random_state=123, max_iter=20)
+svm.fit(train_features, train_labels)
+print(accuracy(svm.predict(test_features), test_labels))
+
+
+# Model: Decision tree classifier.
+tree = skt.DecisionTreeClassifier(random_state=123)
+tree.fit(train_features, train_labels)
+print(accuracy(tree.predict(test_features), test_labels))
+
+
+# Model: Random forest classifier.
+tree = ske.RandomForestClassifier(random_state=123)
+tree.fit(train_features, train_labels)
+print(accuracy(tree.predict(test_features), test_labels))
+
+
+from keras.models import Sequential
+from keras.layers import Dense
+
+# Define the neural network.
+model = Sequential()
+model.add(Dense(units=10, activation="relu", input_dim=num_features))
+model.add(Dense(units=10, activation="relu"))
+# model.add(Dense(units=128, activation="relu"))
+model.add(Dense(units=num_classes, activation="softmax"))
+opt = keras.optimizers.Adam(lr=0.00001)
+model.compile(loss="categorical_crossentropy", optimizer=opt,
+              metrics=["accuracy"])
+model.summary()
+
+# Train the neural network.
+np.random.seed(123)
+history = model.fit(train_features, train_matrix, batch_size=256, epochs=128,
+                    validation_split=0.2, verbose=2)
+                    
+
+
+plt.plot(history.history["loss"])
+plt.plot(history.history["val_loss"])
+plt.title("Model Loss vs. Epoch")
+plt.ylabel("Loss")
+plt.xlabel("Epoch")
+plt.legend(["Train", "Val"])
+plt.show()
+
+plt.plot(history.history["acc"])
+plt.plot(history.history["val_acc"])
+plt.title("Model Accuracy vs. Epoch")
+plt.ylabel("Loss")
+plt.xlabel("Epoch")
+plt.legend(["Train", "Val"])
+plt.show()
+
+
+prediction_matrix = model.predict(test_features)
+prediction_labels = prediction_matrix.argmax(1)
+prediction_labels
+
+np.unique(prediction_labels)
